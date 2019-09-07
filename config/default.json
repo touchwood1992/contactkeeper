@@ -1,0 +1,4 @@
+{
+	"mongoURI": "mongodb+srv://contactkeeper:contactkeeper@cluster0-654bz.mongodb.net/test?retryWrites=true&w=majority",
+	"jsontoken": "prashanttokenvalue"
+}
