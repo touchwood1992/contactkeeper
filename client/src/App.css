@@ -1,0 +1,64 @@
+:root {
+  --header-bg: #000;
+  --linkcolor: #000;
+  --hoverlinkcolor: #fff;
+  --linkbgcolor: #fff;
+  --hoverlinkbgcolor: #000;
+  --footerbg: #000;
+}
+div#contactkeeper {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 50px;
+}
+nav.navbar {
+  padding: 0;
+}
+
+header {
+  background-color: var(--header-bg);
+}
+
+.main_menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.main_menu li {
+  list-style: none;
+}
+.main_menu li a,
+.logo_container a {
+  padding: 10px 15px;
+  background: var(--linkbgcolor);
+  color: var(--linkcolor);
+  display: block;
+}
+.main_menu li a:hover,
+.logo_container a:hover {
+  background: var(--hoverlinkbgcolor);
+  color: var(--hoverlinkcolor);
+  text-decoration: none;
+}
+.logo_container i {
+  margin-right: 10px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--footerbg);
+  padding: 10px 0;
+  color: #fff;
+  text-align: center;
+}
+.appalerts .alert {
+  padding: 5px 15px;
+  margin-bottom: 8px;
+}
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
