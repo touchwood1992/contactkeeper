@@ -1,4 +1,11 @@
-import { USER_SIGNUP, USER_SIGNUP_FAIL, RESET_SIGNUP } from "../types";
+import {
+  USER_SIGNUP,
+  USER_SIGNUP_FAIL,
+  RESET_SIGNUP,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  SET_USER
+} from "../types";
 export default (state, action) => {
   switch (action.type) {
     case USER_SIGNUP:
@@ -17,6 +24,23 @@ export default (state, action) => {
         errors: [],
         isRegistered: false
       };
+    case LOGIN_SUCCESS:
+      localStorage.setItem("utoken", action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
+        errors: [],
+        isRegistered: false
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        token: null,
+        errors: action.payload.errors,
+        isRegistered: false
+      };
+    case SET_USER:
+      return { ...state, user: action.payload };
     default:
       return { ...state };
   }
