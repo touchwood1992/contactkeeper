@@ -5,7 +5,7 @@ const Login = (props) => {
 	const authContext = useContext(AuthContext);
 	const alertContext = useContext(AlertContext);
 
-	const { isRegistered, resetSignup, errors, loginUser, token } = authContext;
+	const { isRegistered, resetSignup, loginMsg, loginUser, token, resetLoginErrors } = authContext;
 	const { setAlerts } = alertContext;
 
 	useEffect(
@@ -13,8 +13,9 @@ const Login = (props) => {
 			if (isRegistered) {
 				resetSignup();
 			}
-			if (errors.length > 0) {
-				errors.map((error) => setAlerts(error.msg, 'danger'));
+			if (loginMsg.length > 0) {
+				loginMsg.map((error) => setAlerts(error.msg, 'danger'));
+				resetLoginErrors();
 			}
 			if (token) {
 				//setAlerts("Signin Successful", "success");
@@ -22,7 +23,7 @@ const Login = (props) => {
 			}
 		},
 		// eslint-disable-next-line
-		[ isRegistered, errors, token, props.history ]
+		[ isRegistered, loginMsg, token, props.history ]
 	);
 
 	const [ loginDetails, setLoginDetails ] = useState({ email: '', password: '' });

@@ -6,17 +6,28 @@ import {
 	LOGIN_FAIL,
 	SET_USER,
 	REMOVE_USER,
-	LOGOUT_USER
+	LOGOUT_USER,
+	RESET_LOGIN_ERRORS,
+	RESET_SIGNUP_ERRORS
 } from '../types';
 export default (state, action) => {
 	switch (action.type) {
 		case USER_SIGNUP:
-			return { ...state, ...action.payload, errors: [], isRegistered: true, isLogout: false, user: null };
+			return {
+				...state,
+				...action.payload,
+				signupMsg: [],
+				loginMsg: [],
+				isRegistered: true,
+				isLogout: false,
+				user: null
+			};
 		case USER_SIGNUP_FAIL:
 			return {
 				...state,
 				token: null,
-				errors: action.payload.errors,
+				loginMsg: [],
+				signupMsg: action.payload.errors,
 				isRegistered: false,
 				isLogout: false,
 				user: null
@@ -25,18 +36,20 @@ export default (state, action) => {
 			return {
 				...state,
 				token: null,
-				errors: [],
 				isRegistered: false,
-				isLogout: false
+				isLogout: false,
+				signupMsg: [],
+				loginMsg: []
 			};
 		case LOGIN_SUCCESS:
 			localStorage.setItem('utoken', action.payload.token);
 			return {
 				...state,
 				...action.payload,
-				errors: [],
 				isRegistered: false,
-				isLogout: false
+				isLogout: false,
+				signupMsg: [],
+				loginMsg: []
 			};
 		case LOGIN_FAIL:
 		case REMOVE_USER:
@@ -44,7 +57,8 @@ export default (state, action) => {
 			return {
 				...state,
 				token: null,
-				errors: action.payload.errors,
+				signupMsg: [],
+				loginMsg: action.payload.errors,
 				isRegistered: false,
 				isLogout: false,
 				user: null
@@ -54,7 +68,8 @@ export default (state, action) => {
 			return {
 				...state,
 				token: null,
-				errors: [],
+				signupMsg: [],
+				loginMsg: [],
 				isRegistered: false,
 				isLogout: true,
 				user: null
@@ -64,9 +79,17 @@ export default (state, action) => {
 				...state,
 				user: action.payload,
 				token: localStorage.getItem('utoken'),
-				errors: [],
+				signupMsg: [],
+				loginMsg: [],
 				isLogout: false
 			};
+
+		case RESET_LOGIN_ERRORS:
+			return { ...state, loginMsg: [] };
+
+		case RESET_SIGNUP_ERRORS:
+			return { ...state, signupMsg: [] };
+
 		default:
 			return { ...state };
 	}

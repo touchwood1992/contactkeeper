@@ -10,12 +10,16 @@ import {
 	LOGIN_FAIL,
 	SET_USER,
 	REMOVE_USER,
-	LOGOUT_USER
+	LOGOUT_USER,
+	RESET_LOGIN_ERRORS,
+	RESET_SIGNUP_ERRORS
 } from '../types';
 const AuthState = (props) => {
 	const defaultState = {
 		token: null,
-		errors: [],
+		loginMsg: [],
+		signupMsg: [],
+
 		isRegistered: false,
 		user: null,
 		isLogout: false
@@ -68,19 +72,28 @@ const AuthState = (props) => {
 		dispatch({ type: LOGOUT_USER });
 	};
 
+	const resetLoginErrors = () => {
+		dispatch({ type: RESET_LOGIN_ERRORS });
+	};
+	const resetSignupErrors = () => {
+		dispatch({ type: RESET_SIGNUP_ERRORS });
+	};
 	return (
 		<AuthContext.Provider
 			value={{
 				userSignup,
 				token: state.token,
-				errors: state.errors,
+				loginMsg: state.loginMsg,
+				signupMsg: state.signupMsg,
 				isRegistered: state.isRegistered,
 				resetSignup,
 				loginUser,
 				setUser,
 				user: state.user,
 				isLogout: state.isLogout,
-				logoutUser
+				logoutUser,
+				resetLoginErrors,
+				resetSignupErrors
 			}}
 		>
 			{props.children}

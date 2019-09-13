@@ -6,12 +6,13 @@ const Signup = (props) => {
 	const authContext = useContext(AuthContext);
 
 	const { setAlerts } = alertContext;
-	const { userSignup, token, errors, isRegistered } = authContext;
+	const { userSignup, token, signupMsg, isRegistered, resetSignupErrors } = authContext;
 
 	useEffect(
 		() => {
-			if (errors.length > 0) {
-				errors.map((error) => setAlerts(error.msg, 'danger'));
+			if (signupMsg.length > 0) {
+				signupMsg.map((error) => setAlerts(error.msg, 'danger'));
+				resetSignupErrors();
 			}
 			if (isRegistered) {
 				setAlerts('Signup successfully. Please Login here.', 'success', 5000);
@@ -28,7 +29,7 @@ const Signup = (props) => {
 			}
 		},
 		// eslint-disable-next-line
-		[ isRegistered, errors, props.history, token ]
+		[ isRegistered, signupMsg, props.history, token ]
 	);
 
 	const [ signup, setSignup ] = useState({
