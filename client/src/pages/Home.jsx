@@ -2,9 +2,15 @@ import React, { useEffect, useContext } from 'react';
 import AuthContext from '../context/Auth/authContext';
 import AddContact from '../components/AddContact';
 import Contacts from '../components/Contacts';
+
+import ContactContext from '../context/Contacts/contactContext';
+
 const Home = (props) => {
 	const authContext = useContext(AuthContext);
-	const { setUser, user, errors } = authContext;
+	const { user, errors, setUser } = authContext;
+
+	const contactContext = useContext(ContactContext);
+	const { resetContactState } = contactContext;
 
 	useEffect(
 		() => {
@@ -13,6 +19,9 @@ const Home = (props) => {
 			} else if (!user) {
 				setUser();
 			}
+			return () => {
+				resetContactState();
+			};
 		},
 		// eslint-disable-next-line
 		[ errors, user, props.history ]

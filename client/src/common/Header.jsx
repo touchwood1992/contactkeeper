@@ -19,6 +19,7 @@ const Header = () => {
 				setUser();
 			}
 		},
+		// eslint-disable-next-line
 		[ isLogout ]
 	);
 	const logout = (e) => {

@@ -78,10 +78,13 @@ const ContactState = (props) => {
 			});
 
 			dispatch({ type: UPDATE_CONTACT, payload: res.data });
-			console.log(state.allcontacts);
 		} catch (error) {
 			//dispatch({ type: UPDATE_CONTACT_FAIL, payload: error.response.data.errors });
 		}
+	};
+
+	const resetContactState = () => {
+		dispatch({ type: RESET_ALL_CONTACTS });
 	};
 
 	return (
@@ -98,7 +101,8 @@ const ContactState = (props) => {
 				loading: state.loading,
 				editContact: state.editContact,
 				setEditContact,
-				updateContact
+				updateContact,
+				resetContactState
 			}}
 		>
 			{props.children}
