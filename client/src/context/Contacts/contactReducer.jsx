@@ -45,6 +45,7 @@ export default (state, action) => {
 				...state,
 				isdeleted: action.payload.success,
 				allcontacts: state.allcontacts.filter((c) => c._id !== action.payload.id),
+				cadded: false,
 				errors: [],
 				loading: false,
 				editContact: null

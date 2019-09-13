@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import AuthContext from '../context/Auth/authContext';
 import ContactContext from '../context/Contacts/contactContext';
 import AlertContext from '../context/Alert/alertContext';
@@ -37,28 +37,38 @@ const Header = () => {
 			<nav className='navbar'>
 				<div className='container'>
 					<div className='logo_container'>
-						<Link to='/'>
+						<NavLink exact activeClassName='is-active' to='/'>
 							<i className='fa fa-home' />Keep Contacts
-						</Link>
+						</NavLink>
 					</div>
 					<div className='right_container'>
 						<ul className='main_menu'>
 							<li>
-								<Link to='/'>Home</Link>
+								<NavLink exact activeClassName='is-active' to='/'>
+									Home
+								</NavLink>
 							</li>
 							<li>
-								<Link to='/about'>About</Link>
+								<NavLink exact activeClassName='is-active' to='/about'>
+									About
+								</NavLink>
 							</li>
 							<li>
-								<Link to='/contact'>Contact</Link>
+								<NavLink exact activeClassName='is-active' to='/contact'>
+									Contact
+								</NavLink>
 							</li>
 							{user === null && (
 								<React.Fragment>
 									<li>
-										<Link to='/login'>Login</Link>
+										<NavLink exact activeClassName='is-active' to='/login'>
+											Login
+										</NavLink>
 									</li>
 									<li>
-										<Link to='/signup'>Signup</Link>
+										<NavLink exact activeClassName='is-active' to='/signup'>
+											Signup
+										</NavLink>
 									</li>
 								</React.Fragment>
 							)}
@@ -66,8 +76,8 @@ const Header = () => {
 							{user !== null && (
 								<React.Fragment>
 									<li className='userdetail_container'>
-										<i className='fa fa-user' />
-										<span className='uname'>Hi, {user.name}</span>
+										<i className='ml-2 mr-2 fa fa-user' />
+										<span className='uname mr-2'>Hi, {user.name}</span>
 									</li>
 									<li>
 										<a href='/logout' onClick={logout}>
