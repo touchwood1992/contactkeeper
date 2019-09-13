@@ -15,28 +15,31 @@ import Alert from './components/Alert';
 import AlertState from './context/Alert/AlertState';
 import AuthState from './context/Auth/AuthState';
 import PrivateRoute from './privateroute/PrivateRoute';
+import ContactState from './context/Contacts/ContactState';
 const App = () => {
 	return (
 		<AuthState>
-			<AlertState>
-				<Router>
-					<Header />
-					<div className='container mt-2 appalerts'>
-						<Alert />
-					</div>
-					<div className='container'>
-						<Switch>
-							<PrivateRoute exact path='/' component={Home} />
-							<Route exact path='/about' component={About} />
-							<Route exact path='/contact' component={Contactus} />
-							<Route exact path='/signup' component={Signup} />
-							<Route exact path='/login' component={Login} />
-							<Route component={ErrorPage} />
-						</Switch>
-					</div>
-					<Footer />
-				</Router>
-			</AlertState>
+			<ContactState>
+				<AlertState>
+					<Router>
+						<Header />
+						<div className='container mt-2 appalerts'>
+							<Alert />
+						</div>
+						<div className='container'>
+							<Switch>
+								<PrivateRoute exact path='/' component={Home} />
+								<Route exact path='/about' component={About} />
+								<Route exact path='/contact' component={Contactus} />
+								<Route exact path='/signup' component={Signup} />
+								<Route exact path='/login' component={Login} />
+								<Route component={ErrorPage} />
+							</Switch>
+						</div>
+						<Footer />
+					</Router>
+				</AlertState>
+			</ContactState>
 		</AuthState>
 	);
 };

@@ -27,6 +27,7 @@ const Signup = (props) => {
 				props.history.push('/');
 			}
 		},
+		// eslint-disable-next-line
 		[ isRegistered, errors, props.history, token ]
 	);
 

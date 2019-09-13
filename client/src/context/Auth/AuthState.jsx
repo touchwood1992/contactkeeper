@@ -9,14 +9,16 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
 	SET_USER,
-	REMOVE_USER
+	REMOVE_USER,
+	LOGOUT_USER
 } from '../types';
 const AuthState = (props) => {
 	const defaultState = {
 		token: null,
 		errors: [],
 		isRegistered: false,
-		user: null
+		user: null,
+		isLogout: false
 	};
 
 	const [ state, dispatch ] = useReducer(authReducer, defaultState);
@@ -58,9 +60,14 @@ const AuthState = (props) => {
 			});
 			dispatch({ type: SET_USER, payload: user.data });
 		} catch (error) {
-			dispatch({ type: REMOVE_USER, payload: { errors: [ { msg: 'Session expired please login.' } ] } });
+			dispatch({ type: REMOVE_USER, payload: { errors: [] } });
 		}
 	};
+
+	const logoutUser = () => {
+		dispatch({ type: LOGOUT_USER });
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -71,7 +78,9 @@ const AuthState = (props) => {
 				resetSignup,
 				loginUser,
 				setUser,
-				user: state.user
+				user: state.user,
+				isLogout: state.isLogout,
+				logoutUser
 			}}
 		>
 			{props.children}

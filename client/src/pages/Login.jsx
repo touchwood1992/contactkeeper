@@ -21,6 +21,7 @@ const Login = (props) => {
 				props.history.push('/');
 			}
 		},
+		// eslint-disable-next-line
 		[ isRegistered, errors, token, props.history ]
 	);
 
@@ -63,7 +64,14 @@ const Login = (props) => {
 					</div>
 					<div className='form-group'>
 						<input type='submit' value='Login' className='btn btn-danger' />
-						<a href='#' className='signup_link ml-2' onClick={() => props.history.push('/signup')}>
+						<a
+							href='/signup'
+							className='signup_link ml-2'
+							onClick={(e) => {
+								e.preventDefault();
+								props.history.push('/signup');
+							}}
+						>
 							Signup?
 						</a>
 					</div>

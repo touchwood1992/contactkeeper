@@ -104,7 +104,7 @@ route.delete('/:id', auth, async (req, res) => {
 			return res.status(400).json({ errors: [ { msg: 'Invalid user request' } ] });
 		}
 		await contactModel.findByIdAndDelete(contactID);
-		return res.status(200).json({ success: [ { msg: 'Contact Deleted Successfully.' } ] });
+		return res.status(200).json({ errors: [ { msg: 'Contact Deleted Successfully.' } ] });
 	} catch (error) {
 		res.status(500).json({ errors: [ { msg: error.message } ] });
 	}

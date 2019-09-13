@@ -1,20 +1,21 @@
 import React, { useEffect, useContext } from 'react';
 import AuthContext from '../context/Auth/authContext';
-import AlertContext from '../context/Alert/alertContext';
 import AddContact from '../components/AddContact';
+import Contacts from '../components/Contacts';
 const Home = (props) => {
 	const authContext = useContext(AuthContext);
 	const { setUser, user, errors } = authContext;
-	const alertContext = useContext(AlertContext);
+
 	useEffect(
 		() => {
 			if (errors.length > 0) {
 				props.history.push('/login');
-			} else {
+			} else if (!user) {
 				setUser();
 			}
 		},
-		[ errors, props.history ]
+		// eslint-disable-next-line
+		[ errors, user, props.history ]
 	);
 
 	return (
@@ -23,7 +24,10 @@ const Home = (props) => {
 				<div className='col-md-6'>
 					<AddContact />
 				</div>
-				<div className='col-md-6'>Right part</div>
+				<div className='col-md-6'>
+					<h5 className='text-center mt-5'>Your Contacts</h5>
+					<Contacts />
+				</div>
 			</div>
 		)
 	);
