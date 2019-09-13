@@ -11,7 +11,6 @@ const Contacts = (props) => {
 
 	useEffect(
 		() => {
-			console.log(loading);
 			if (loading === true) {
 				getAllcontacts();
 			}
