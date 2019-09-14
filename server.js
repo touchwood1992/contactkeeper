@@ -1,10 +1,16 @@
 const express = require('express');
 const path = require('path');
+const fileUploade = require('express-fileupload');
+
 const app = express();
 
 const dbCommection = require('./config/db');
 dbCommection();
+
 app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
+app.use(fileUploade());
+app.use(express.static('imguploads'));
 
 app.use('/api/user', require('./route/api/user'));
 app.use('/api/auth', require('./route/api/auth'));

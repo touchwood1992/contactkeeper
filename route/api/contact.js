@@ -15,11 +15,17 @@ route.post(
 		if (!errors.isEmpty()) {
 			return res.status(422).json({ errors: errors.array() });
 		}
-
 		const userId = req.user;
 		const { name, email, phone } = req.body;
+		const contactObj = new contactModel({ name, email, phone });
+
+		if (req.files !== null) {
+			const imageFile = req.files.cimage;
+			await imageFile.mv(`./imguploads/${imageFile.name}`);
+			contactObj.cimage = imageFile.name;
+		}
+
 		try {
-			const contactObj = new contactModel({ name, email, phone });
 			contactObj.user = userId;
 			await contactObj.save();
 			return res.status(200).json(contactObj);

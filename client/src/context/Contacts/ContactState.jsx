@@ -39,8 +39,17 @@ const ContactState = (props) => {
 
 	const addContact = async (contact) => {
 		try {
-			const res = await axios.post('/api/contact', contact, {
-				headers: { 'content-type': 'application/json', 'jwt-auth-token': localStorage.getItem('utoken') }
+			var bodyFormData = new FormData();
+			bodyFormData.append('name', contact.name);
+			bodyFormData.append('email', contact.email);
+			bodyFormData.append('cimage', contact.file);
+
+			const res = await axios.post('/api/contact', bodyFormData, {
+				headers: {
+					//'content-type': 'application/json',
+					'Content-Type': 'multipart/form-data',
+					'jwt-auth-token': localStorage.getItem('utoken')
+				}
 			});
 			const addedcontact = res.data;
 			dispatch({ type: ADD_CONTACT, payload: addedcontact });

@@ -9,8 +9,8 @@ const AddContact = () => {
 	const { addContact, errors, cadded, editContact, updateContact } = contactContext;
 	const { setAlerts } = alertContext;
 
-	const [ contact, setContact ] = useState({ name: '', email: '', phone: '' });
-	const { name, email, phone } = contact;
+	const [ contact, setContact ] = useState({ name: '', email: '', phone: '', file: '' });
+	const { name, email, phone, file } = contact;
 
 	useEffect(
 		() => {
@@ -34,6 +34,7 @@ const AddContact = () => {
 	};
 
 	const saveContact = (e) => {
+		console.log(contact);
 		e.preventDefault();
 		if (editContact !== null) {
 			updateContact(contact);
@@ -44,11 +45,20 @@ const AddContact = () => {
 		}
 	};
 
+	const setFile = (e) => {
+		setContact({ ...contact, file: e.target.files[0] });
+
+		document.getElementById('preview').innerHTML = '';
+		const filesource = window.URL.createObjectURL(e.target.files[0]);
+		document.getElementById('preview').innerHTML = `<img src="${filesource}" width=50 style="float:left"/>`;
+	};
+
 	return (
 		<Fragment>
 			<h5 className='text-center mt-5'>{editContact !== null ? 'Update Contact' : 'Add Contact'}</h5>
 			<form onSubmit={saveContact}>
 				<div className='form-group'>
+					
 					<input
 						type='text'
 						name='name'
@@ -81,6 +91,19 @@ const AddContact = () => {
 						className='form-control'
 					/>
 				</div>
+
+				<div className='form-group' style={{ display: 'flex' }}>
+					<input
+						type='file'
+						accept='images/*'
+						name='cimage'
+						id='cimage'
+						className='form-cotrol'
+						onChange={setFile}
+					/>
+					<div className='preview' id='preview' />
+				</div>
+
 				<div className='form-group'>
 					<input
 						type='submit'

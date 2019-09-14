@@ -19,6 +19,7 @@ const ContactItem = ({ contact }) => {
 			<div className='cname'>{contact.name}</div>
 			<div className='cemail'>{contact.email}</div>
 			<div className='cphone'>{contact.phone}</div>
+			{contact.cimage !== null && <img src={contact.cimage} width='50' />}
 			<button onClick={deleteme} className='btn btn-danger'>
 				Delete
 			</button>
