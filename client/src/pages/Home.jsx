@@ -14,17 +14,14 @@ const Home = (props) => {
 
 	useEffect(
 		() => {
-			if (errors.length > 0) {
-				props.history.push('/login');
-			} else if (!user) {
-				setUser();
-			}
+			setUser();
+
 			return () => {
 				resetContactState();
 			};
 		},
 		// eslint-disable-next-line
-		[ errors, user, props.history ]
+		[]
 	);
 
 	return (
