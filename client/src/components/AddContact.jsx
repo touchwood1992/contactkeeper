@@ -1,15 +1,21 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react';
 import ContactContext from '../context/Contacts/contactContext';
 import AlertContext from '../context/Alert/alertContext';
+import Loading from './Loading';
 
 const AddContact = () => {
 	const contactContext = useContext(ContactContext);
 	const alertContext = useContext(AlertContext);
 
-	const { addContact, errors, cadded, editContact, updateContact } = contactContext;
+	const { addContact, errors, cadded, editContact, updateContact, addContactLoading } = contactContext;
 	const { setAlerts } = alertContext;
 
-	const [ contact, setContact ] = useState({ name: '', email: '', phone: '', file: '' });
+	const [ contact, setContact ] = useState({
+		name: '',
+		email: '',
+		phone: '',
+		file: ''
+	});
 	const { name, email, phone, file } = contact;
 
 	useEffect(
@@ -33,18 +39,6 @@ const AddContact = () => {
 		setContact({ ...contact, [e.target.name]: e.target.value });
 	};
 
-	const saveContact = (e) => {
-		console.log(contact);
-		e.preventDefault();
-		if (editContact !== null) {
-			updateContact(contact);
-			setAlerts('Contact Updated Successfully.', 'success');
-			setContact({ name: '', email: '', phone: '' });
-		} else {
-			addContact(contact);
-		}
-	};
-
 	const setFile = (e) => {
 		setContact({ ...contact, file: e.target.files[0] });
 
@@ -53,12 +47,26 @@ const AddContact = () => {
 		document.getElementById('preview').innerHTML = `<img src="${filesource}" width=50 style="float:left"/>`;
 	};
 
+	const saveContact = (e) => {
+		e.preventDefault();
+		if (editContact !== null) {
+			updateContact(contact);
+			setAlerts('Contact Updated Successfully.', 'success');
+			setContact({ name: '', email: '', phone: '', file: '' });
+		} else {
+			addContact(contact);
+		}
+	};
+
+	if (addContactLoading) {
+		return <Loading />;
+	}
+
 	return (
 		<Fragment>
 			<h5 className='text-center mt-5'>{editContact !== null ? 'Update Contact' : 'Add Contact'}</h5>
 			<form onSubmit={saveContact}>
 				<div className='form-group'>
-					
 					<input
 						type='text'
 						name='name'
@@ -92,23 +100,29 @@ const AddContact = () => {
 					/>
 				</div>
 
-				<div className='form-group' style={{ display: 'flex' }}>
+				<div className='custom-file' style={{ display: 'flex' }}>
 					<input
 						type='file'
-						accept='images/*'
+						accept='image/*'
 						name='cimage'
-						id='cimage'
-						className='form-cotrol'
+						id='customFile'
+						className='custom-file-input'
 						onChange={setFile}
 					/>
-					<div className='preview' id='preview' />
+					<label className='custom-file-label' htmlFor='customFile'>
+						Choose file
+					</label>
+				</div>
+
+				<div className='previewFile mt-2' id='preview'>
+					{editContact !== null && editContact.cimage !== null && <img src={editContact.cimage} width='50' />}
 				</div>
 
 				<div className='form-group'>
 					<input
 						type='submit'
 						value={editContact !== null ? 'Update Contact' : 'Add Contact'}
-						className='btn btn-danger'
+						className='btn btn-danger mt-2'
 					/>
 				</div>
 			</form>

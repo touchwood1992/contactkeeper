@@ -10,7 +10,8 @@ import {
 	RESET_ALL_CONTACTS,
 	DELETE_CONTACT_ERROR,
 	SET_CONTACT,
-	UPDATE_CONTACT
+	UPDATE_CONTACT,
+	SET_LOADING
 } from '../types';
 
 import axios from 'axios';
@@ -22,12 +23,14 @@ const ContactState = (props) => {
 		cadded: false,
 		isdeleted: [],
 		loading: true,
-		editContact: null
+		editContact: null,
+		addContactLoading: false
 	};
 
 	const [ state, dispatch ] = useReducer(contactReducer, defaultState);
 
 	const getAllcontacts = async () => {
+		dispatch({ type: SET_LOADING });
 		try {
 			const res = await axios.get('/api/contact', {
 				headers: { 'content-type': 'application/json', 'jwt-auth-token': localStorage.getItem('utoken') }
@@ -38,11 +41,15 @@ const ContactState = (props) => {
 	};
 
 	const addContact = async (contact) => {
+		dispatch({ type: SET_LOADING });
 		try {
-			var bodyFormData = new FormData();
+			const bodyFormData = new FormData();
 			bodyFormData.append('name', contact.name);
 			bodyFormData.append('email', contact.email);
-			bodyFormData.append('cimage', contact.file);
+			bodyFormData.append('phone', contact.phone);
+			if (contact.file !== '') {
+				bodyFormData.append('cimage', contact.file);
+			}
 
 			const res = await axios.post('/api/contact', bodyFormData, {
 				headers: {
@@ -59,6 +66,7 @@ const ContactState = (props) => {
 	};
 
 	const deleteContact = async (id) => {
+		dispatch({ type: SET_LOADING });
 		try {
 			const req = await axios.delete(`/api/contact/${id}`, {
 				headers: { 'jwt-auth-token': localStorage.getItem('utoken') }
@@ -78,16 +86,26 @@ const ContactState = (props) => {
 	};
 
 	const updateContact = async (contact) => {
+		dispatch({ type: SET_LOADING });
 		try {
-			const res = await axios.put(`/api/contact/${contact._id}`, contact, {
+			const bodyFormData = new FormData();
+			bodyFormData.append('name', contact.name);
+			bodyFormData.append('email', contact.email);
+			bodyFormData.append('phone', contact.phone);
+			if (typeof contact.file === 'object') {
+				bodyFormData.append('cimage', contact.file);
+			}
+
+			const res = await axios.put(`/api/contact/${contact._id}`, bodyFormData, {
 				headers: {
-					'content-type': 'application/json',
+					'content-type': 'multipart/form-data',
 					'jwt-auth-token': localStorage.getItem('utoken')
 				}
 			});
 
 			dispatch({ type: UPDATE_CONTACT, payload: res.data });
 		} catch (error) {
+			console.log(error);
 			//dispatch({ type: UPDATE_CONTACT_FAIL, payload: error.response.data.errors });
 		}
 	};
@@ -111,7 +129,8 @@ const ContactState = (props) => {
 				editContact: state.editContact,
 				setEditContact,
 				updateContact,
-				resetContactState
+				resetContactState,
+				addContactLoading: state.addContactLoading
 			}}
 		>
 			{props.children}

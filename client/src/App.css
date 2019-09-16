@@ -74,6 +74,14 @@ footer {
 	color: #000;
 	background-color: #ccc;
 }
+.loaderContainer {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.previewFile {
+	display: flex;
+}
 @media (min-width: 1200px) {
 	.container {
 		max-width: 1170px;

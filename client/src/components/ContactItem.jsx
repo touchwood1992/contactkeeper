@@ -16,16 +16,27 @@ const ContactItem = ({ contact }) => {
 	};
 	return (
 		<div className='contactItem'>
-			<div className='cname'>{contact.name}</div>
-			<div className='cemail'>{contact.email}</div>
-			<div className='cphone'>{contact.phone}</div>
+			<div className='cname'>
+				<i className='fa fa-user mr-2' />
+				{contact.name}
+			</div>
+			<div className='cemail'>
+				<i className='fa fa-envelope mr-2' />
+				{contact.email}
+			</div>
+			<div className='cphone'>
+				<i className='fa fa-phone mr-2' />
+				{contact.phone}
+			</div>
 			{contact.cimage !== null && <img src={contact.cimage} width='50' />}
-			<button onClick={deleteme} className='btn btn-danger'>
-				Delete
-			</button>
-			<button onClick={updateme} className='btn btn-danger ml-2'>
-				Update
-			</button>
+			<div className='actionContainer mt-2'>
+				<button onClick={deleteme} className='btn btn-danger '>
+					Delete
+				</button>
+				<button onClick={updateme} className='btn btn-danger ml-2'>
+					Update
+				</button>
+			</div>
 		</div>
 	);
 };

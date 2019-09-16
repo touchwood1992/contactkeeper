@@ -85,7 +85,16 @@ route.put('/:id', auth, async (req, res) => {
 		if (String(contact.user) !== userId) {
 			return res.status(400).json({ errors: [ { msg: 'Invalid user request' } ] });
 		}
-		const updatedContact = await contactModel.findByIdAndUpdate(contactID, { name, email, phone }, { new: true });
+
+		const reqBody = { name, email, phone };
+
+		if (req.files !== null) {
+			const imageFile = req.files.cimage;
+			await imageFile.mv(`./imguploads/${imageFile.name}`);
+			reqBody.cimage = imageFile.name;
+		}
+
+		const updatedContact = await contactModel.findByIdAndUpdate(contactID, reqBody, { new: true });
 
 		return res.status(200).json(updatedContact);
 	} catch (error) {

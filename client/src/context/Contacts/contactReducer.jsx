@@ -6,7 +6,8 @@ import {
 	RESET_ALL_CONTACTS,
 	DELETE_CONTACT_ERROR,
 	SET_CONTACT,
-	UPDATE_CONTACT
+	UPDATE_CONTACT,
+	SET_LOADING
 } from '../types';
 export default (state, action) => {
 	switch (action.type) {
@@ -18,7 +19,8 @@ export default (state, action) => {
 				cadded: false,
 				isdeleted: [],
 				loading: false,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 		case ADD_CONTACT:
 			return {
@@ -28,7 +30,8 @@ export default (state, action) => {
 				cadded: true,
 				isdeleted: [],
 				loading: false,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 		case ADD_CONTACT_ERROR:
 			return {
@@ -37,7 +40,8 @@ export default (state, action) => {
 				cadded: false,
 				isdeleted: [],
 				loading: false,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 
 		case DELETE_CONTACT:
@@ -48,7 +52,8 @@ export default (state, action) => {
 				cadded: false,
 				errors: [],
 				loading: false,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 		case RESET_ALL_CONTACTS:
 			return {
@@ -57,7 +62,8 @@ export default (state, action) => {
 				cadded: false,
 				isdeleted: [],
 				loading: true,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 		case DELETE_CONTACT_ERROR:
 			return {
@@ -66,7 +72,8 @@ export default (state, action) => {
 				cadded: false,
 				isdeleted: [],
 				loading: false,
-				editContact: null
+				editContact: null,
+				addContactLoading: false
 			};
 
 		case SET_CONTACT:
@@ -76,7 +83,8 @@ export default (state, action) => {
 				cadded: false,
 				isdeleted: [],
 				loading: false,
-				editContact: state.allcontacts.find((contact) => contact._id === action.payload)
+				editContact: state.allcontacts.find((contact) => contact._id === action.payload),
+				addContactLoading: false
 			};
 		case UPDATE_CONTACT:
 			return {
@@ -92,8 +100,11 @@ export default (state, action) => {
 					} else {
 						return contact;
 					}
-				})
+				}),
+				addContactLoading: false
 			};
+		case SET_LOADING:
+			return { ...state, addContactLoading: true };
 		default:
 			return { ...state };
 	}
