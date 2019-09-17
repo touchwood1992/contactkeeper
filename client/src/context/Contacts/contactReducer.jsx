@@ -7,7 +7,8 @@ import {
 	DELETE_CONTACT_ERROR,
 	SET_CONTACT,
 	UPDATE_CONTACT,
-	SET_LOADING
+	SET_LOADING,
+	SET_ALLCONTENT_LOADING
 } from '../types';
 export default (state, action) => {
 	switch (action.type) {
@@ -20,7 +21,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: false,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case ADD_CONTACT:
 			return {
@@ -31,7 +33,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: false,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case ADD_CONTACT_ERROR:
 			return {
@@ -41,7 +44,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: false,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 
 		case DELETE_CONTACT:
@@ -53,7 +57,8 @@ export default (state, action) => {
 				errors: [],
 				loading: false,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case RESET_ALL_CONTACTS:
 			return {
@@ -63,7 +68,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: true,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case DELETE_CONTACT_ERROR:
 			return {
@@ -73,7 +79,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: false,
 				editContact: null,
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 
 		case SET_CONTACT:
@@ -84,7 +91,8 @@ export default (state, action) => {
 				isdeleted: [],
 				loading: false,
 				editContact: state.allcontacts.find((contact) => contact._id === action.payload),
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case UPDATE_CONTACT:
 			return {
@@ -101,10 +109,13 @@ export default (state, action) => {
 						return contact;
 					}
 				}),
-				addContactLoading: false
+				addContactLoading: false,
+				getAllContactsLoading: false
 			};
 		case SET_LOADING:
 			return { ...state, addContactLoading: true };
+		case SET_ALLCONTENT_LOADING:
+			return { ...state, getAllContactsLoading: true };
 		default:
 			return { ...state };
 	}

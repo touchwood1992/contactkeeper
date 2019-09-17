@@ -2,11 +2,13 @@ import React, { useEffect, useContext } from 'react';
 import ContactItem from './ContactItem';
 import ContactContext from '../context/Contacts/contactContext';
 import AlertContext from '../context/Alert/alertContext';
+import Loading from './Loading';
+
 const Contacts = (props) => {
 	const contactContext = useContext(ContactContext);
 	const alertContext = useContext(AlertContext);
 
-	const { allcontacts, getAllcontacts, isdeleted, loading } = contactContext;
+	const { allcontacts, getAllcontacts, isdeleted, loading, getAllContactsLoading } = contactContext;
 	const { setAlerts } = alertContext;
 
 	useEffect(
@@ -24,6 +26,10 @@ const Contacts = (props) => {
 
 	if (isdeleted.length > 0) {
 		//console.log(isdeleted);
+	}
+
+	if (getAllContactsLoading === true) {
+		return <Loading />;
 	}
 
 	return allcontacts.length === 0 ? (

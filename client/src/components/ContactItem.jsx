@@ -28,7 +28,7 @@ const ContactItem = ({ contact }) => {
 				<i className='fa fa-phone mr-2' />
 				{contact.phone}
 			</div>
-			{contact.cimage !== null && <img src={contact.cimage} width='50' />}
+			{contact.cimage !== null && <img src={contact.cimage} width='50' className='mt-2' />}
 			<div className='actionContainer mt-2'>
 				<button onClick={deleteme} className='btn btn-danger '>
 					Delete

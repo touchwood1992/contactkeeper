@@ -11,7 +11,8 @@ import {
 	DELETE_CONTACT_ERROR,
 	SET_CONTACT,
 	UPDATE_CONTACT,
-	SET_LOADING
+	SET_LOADING,
+	SET_ALLCONTENT_LOADING
 } from '../types';
 
 import axios from 'axios';
@@ -24,13 +25,14 @@ const ContactState = (props) => {
 		isdeleted: [],
 		loading: true,
 		editContact: null,
-		addContactLoading: false
+		addContactLoading: false,
+		getAllContactsLoading: false
 	};
 
 	const [ state, dispatch ] = useReducer(contactReducer, defaultState);
 
 	const getAllcontacts = async () => {
-		dispatch({ type: SET_LOADING });
+		dispatch({ type: SET_ALLCONTENT_LOADING });
 		try {
 			const res = await axios.get('/api/contact', {
 				headers: { 'content-type': 'application/json', 'jwt-auth-token': localStorage.getItem('utoken') }
@@ -66,7 +68,7 @@ const ContactState = (props) => {
 	};
 
 	const deleteContact = async (id) => {
-		dispatch({ type: SET_LOADING });
+		dispatch({ type: SET_ALLCONTENT_LOADING });
 		try {
 			const req = await axios.delete(`/api/contact/${id}`, {
 				headers: { 'jwt-auth-token': localStorage.getItem('utoken') }
@@ -130,7 +132,8 @@ const ContactState = (props) => {
 				setEditContact,
 				updateContact,
 				resetContactState,
-				addContactLoading: state.addContactLoading
+				addContactLoading: state.addContactLoading,
+				getAllContactsLoading: state.getAllContactsLoading
 			}}
 		>
 			{props.children}
